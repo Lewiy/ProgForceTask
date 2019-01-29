@@ -9,20 +9,32 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.romanenko.lew.progforcetask.R;
+import com.romanenko.lew.progforcetask.base.BaseFragment;
+import com.romanenko.lew.progforcetask.base.WeatherScreenContract;
 import com.romanenko.lew.progforcetask.mapScreen.MapFragment;
 
-public class WeatherFragment extends Fragment {
+public class WeatherFragment extends BaseFragment implements WeatherScreenContract.ViewWeather{
 
-    public static WeatherFragment MapFragment() {
+    public static WeatherFragment WeatherFragment() {
         return new WeatherFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.map_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.weather_fragment, container, false);
 
 
         return rootView;
+    }
+
+    @Override
+    public void showError(String error) {
+        //Todo: show error
+    }
+
+    @Override
+    public String toString() {
+        return WeatherFragment.class.toString();
     }
 }

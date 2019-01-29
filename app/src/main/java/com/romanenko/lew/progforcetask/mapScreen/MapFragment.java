@@ -1,13 +1,7 @@
 package com.romanenko.lew.progforcetask.mapScreen;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +11,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.romanenko.lew.progforcetask.R;
+import com.romanenko.lew.progforcetask.base.BaseFragment;
+import com.romanenko.lew.progforcetask.base.MapScreenContract;
+import com.romanenko.lew.progforcetask.weatherScreen.WeatherFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MapFragment extends Fragment {
+public class MapFragment extends BaseFragment implements MapScreenContract.ViewWeather {
 
     SupportMapFragment mMapFragment;
 
@@ -51,9 +46,13 @@ public class MapFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.map_fragment, container, false);
         ButterKnife.bind(this, view);
-        mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);
+        init();
         onMapReady();
         return view;
+    }
+
+    private void init() {
+        mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);
     }
 
     private void onMapReady() {
@@ -84,6 +83,19 @@ public class MapFragment extends Fragment {
 
     @OnClick(R.id.weather_forecast)
     public void onClickWeatherForecast() {
+        Fragment fr = WeatherFragment.WeatherFragment();
+        BaseFragment.FragmentChangeListener fc =(BaseFragment.FragmentChangeListener)getActivity();
+        fc.replaceFragment(fr);
+    }
 
+    @Override
+    public void showError(String error) {
+
+
+    }
+
+    @Override
+    public String toString() {
+        return MapFragment.class.toString();
     }
 }
