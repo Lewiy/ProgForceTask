@@ -23,9 +23,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MapFragment extends BaseFragment implements MapScreenContract.ViewWeather {
+public class MapFragment extends BaseFragment implements MapScreenContract.ViewWeather, OnMapReadyCallback {
 
     SupportMapFragment mMapFragment;
+    GoogleMap mGoogleMap;
+    double mLat, mLng;
 
     @BindView(R.id.weather_forecast)
     Button mWeatherForecast;
@@ -47,44 +49,18 @@ public class MapFragment extends BaseFragment implements MapScreenContract.ViewW
         View view = inflater.inflate(R.layout.map_fragment, container, false);
         ButterKnife.bind(this, view);
         init();
-        onMapReady();
         return view;
     }
 
     private void init() {
         mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);
-    }
-
-    private void onMapReady() {
-        mMapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-                //  mMap.clear(); //clear old markers
-
-                CameraPosition googlePlex = CameraPosition.builder()
-                        .target(new LatLng(37.4219999, -122.0862462))
-                        .zoom(10)
-                        .bearing(0)
-                        .tilt(45)
-                        .build();
-
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null);
-
-                mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(37.4219999, -122.0862462))
-                        .title("Spider Man"));
-                // .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.spider)));
-
-            }
-        });
+        mMapFragment.getMapAsync(this);
     }
 
     @OnClick(R.id.weather_forecast)
     public void onClickWeatherForecast() {
-        Fragment fr = WeatherFragment.WeatherFragment();
-        BaseFragment.FragmentChangeListener fc =(BaseFragment.FragmentChangeListener)getActivity();
+        Fragment fr = WeatherFragment.WeatherFragment(mLat,mLng);
+        BaseFragment.FragmentChangeListener fc = (BaseFragment.FragmentChangeListener) getActivity();
         fc.replaceFragment(fr);
     }
 
@@ -97,5 +73,38 @@ public class MapFragment extends BaseFragment implements MapScreenContract.ViewW
     @Override
     public String toString() {
         return MapFragment.class.toString();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        //  mMap.clear(); //clear old markers
+
+        CameraPosition googlePlex = CameraPosition.builder()
+                .target(new LatLng(37.4219999, -122.0862462))
+                .zoom(10)
+                .bearing(0)
+                .tilt(45)
+                .build();
+
+        mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null);
+
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(37.4219999, -122.0862462))
+                .title("Spider Man"));
+        // .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.spider)));
+        mGoogleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                // Cleaning all the markers.
+
+              /*  mPosition = mGoogleMap.getCameraPosition().target;
+                mZoom = mGoogleMap.getCameraPosition().zoom;*/
+                mLat = mGoogleMap.getCameraPosition().target.latitude;
+                mLng = mGoogleMap.getCameraPosition().target.longitude;
+            }
+        });
     }
 }

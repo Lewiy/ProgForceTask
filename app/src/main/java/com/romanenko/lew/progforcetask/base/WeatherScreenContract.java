@@ -8,6 +8,7 @@ public interface WeatherScreenContract {
 
     interface PresenterWeather extends IPresenter<ViewWeather>{
 
+        void loadWeatherForecats(double lat,double lng);
     }
 
 }
