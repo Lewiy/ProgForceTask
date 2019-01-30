@@ -2,7 +2,8 @@ package com.romanenko.lew.progforcetask.network.di.models;
 
 import android.content.Context;
 
-import com.romanenko.lew.testworkaxon.network.di.scopes.ApplicationScope;
+
+import com.romanenko.lew.progforcetask.network.di.scopes.ApplicationScope;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 

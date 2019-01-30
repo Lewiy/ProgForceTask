@@ -8,7 +8,7 @@ import com.romanenko.lew.progforcetask.network.di.scopes.ApplicationScope;
 import dagger.Component;
 
 @ApplicationScope
-@Component(dependencies = WeatherApiComponent.class, modules = RepositoryModule.class)
-public interface RepositoryComponent {
+@Component(modules = RepositoryModule.class)
+public interface AppComponent {
    Repository getUserRepository();
 }

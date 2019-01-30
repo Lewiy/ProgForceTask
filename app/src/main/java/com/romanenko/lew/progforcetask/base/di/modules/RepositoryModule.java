@@ -4,12 +4,13 @@ import android.content.Context;
 
 import com.romanenko.lew.progforcetask.model.Repository;
 import com.romanenko.lew.progforcetask.network.WeatherApi;
+import com.romanenko.lew.progforcetask.network.di.models.WeatherAPIModule;
 import com.romanenko.lew.progforcetask.network.di.scopes.ApplicationScope;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module()
+@Module(includes = WeatherAPIModule.class)
 public class RepositoryModule {
 
     @Provides

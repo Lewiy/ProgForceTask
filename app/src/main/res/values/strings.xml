@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ProgForceTask</string>
     <string name="api_key_google_map">AIzaSyDAvBurJ5ALd0V0QP1Ktf7jGcP0x9GRolU</string>
+    <string name="api_key_weather_forecast">53f680b691582dccb8054897d21dedce</string>
+
 
     <string name="city_country">Enugu, Nigeria</string>
     <string name="date_today">Friday, 8 July</string>
@@ -18,4 +20,5 @@
     <string name="stored_location">You can only store 5 locations</string>
     <string name="permission_notice">This permission is important but you can as well set your location on Location page</string>
     <string name="go_to_location">Go to location setting</string>
+
 </resources>
