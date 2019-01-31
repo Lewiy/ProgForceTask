@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.pavlospt.CircleView;
@@ -47,6 +49,12 @@ public class WeatherFragment extends BaseFragment implements WeatherScreenContra
     TextView mCurrentDay;
     @BindView(R.id.weather_daily_list)
     RecyclerView mWeatherList;
+    @BindView(R.id.progressBar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.weather_page)
+    LinearLayout mWeatherPage;
+    @BindView(R.id.weather_forecast)
+    LinearLayout mWeatherForecast;
 
 
     @Inject
@@ -146,7 +154,12 @@ public class WeatherFragment extends BaseFragment implements WeatherScreenContra
         mWeatherListAdapter.setList(weatherWeatherList);
     }
 
-
+    @Override
+    public void disableProgresBar() {
+        mProgressBar.setVisibility(View.GONE);
+        mWeatherPage.setVisibility(View.VISIBLE);
+        mWeatherForecast.setVisibility(View.VISIBLE);
+    }
 
 
 }

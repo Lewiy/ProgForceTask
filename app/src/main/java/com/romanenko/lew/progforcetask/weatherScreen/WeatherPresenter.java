@@ -8,7 +8,6 @@ import com.romanenko.lew.progforcetask.base.WeatherScreenContract;
 import com.romanenko.lew.progforcetask.entity.WeatherObject;
 import com.romanenko.lew.progforcetask.helpers.Pair;
 import com.romanenko.lew.progforcetask.model.IRepository;
-import com.romanenko.lew.progforcetask.model.POJO.List;
 import com.romanenko.lew.progforcetask.model.POJO.Weather;
 
 import java.text.ParseException;
@@ -66,8 +65,11 @@ public class WeatherPresenter extends BasePresenter<WeatherScreenContract.ViewWe
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(weather ->
-                                getView().setWeatherList(weather)
+                .subscribe(weather -> {
+                            getView().setWeatherList(weather);
+                            getView().disableProgresBar();
+                        }
+
                         , error -> getView().showError(error.getMessage().toString()));
     }
 

@@ -13,6 +13,7 @@ public interface WeatherScreenContract {
            void setWeatherDescription(String weather);
            void setClouds(int number);
            void setWeatherList(List<WeatherObject> weatherWeatherList);
+           void disableProgresBar();
     }
 
     interface PresenterWeather extends IPresenter<ViewWeather>{

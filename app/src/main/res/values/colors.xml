@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#729101</color>
     <color name="colorPrimaryDark">#4f6404</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#729101</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#ffffff</color>
     <string name="delete_text">X</string>
