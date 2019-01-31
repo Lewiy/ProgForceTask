@@ -6,6 +6,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class Weather {
 
+    @SerializedName("city")
+    @Expose
+    private City city;
+    @SerializedName("coord")
+    @Expose
+    private Coord coord;
+    @SerializedName("country")
+    @Expose
+    private String country;
     @SerializedName("cod")
     @Expose
     private String cod;
@@ -18,9 +27,30 @@ public class Weather {
     @SerializedName("list")
     @Expose
     private java.util.List<List> list = null;
-    @SerializedName("city")
-    @Expose
-    private City city;
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Coord getCoord() {
+        return coord;
+    }
+
+    public void setCoord(Coord coord) {
+        this.coord = coord;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public String getCod() {
         return cod;
@@ -52,14 +82,6 @@ public class Weather {
 
     public void setList(java.util.List<List> list) {
         this.list = list;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
     }
 
 }

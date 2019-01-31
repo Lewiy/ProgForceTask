@@ -3,10 +3,14 @@ package com.romanenko.lew.progforcetask.model;
 import android.content.Context;
 
 import com.romanenko.lew.progforcetask.R;
+import com.romanenko.lew.progforcetask.entity.WeatherObject;
+import com.romanenko.lew.progforcetask.helpers.Pair;
 import com.romanenko.lew.progforcetask.model.POJO.Weather;
 import com.romanenko.lew.progforcetask.network.WeatherApi;
 
-import javax.inject.Singleton;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -22,14 +26,14 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public Single<Weather> loadWeatherForecast5Days(float lat, float lon) {
-       /* return randomUsersListFull
-                //.flatMapIterable(list -> Observable.fromIterable(list))
-                .flatMap(list -> Observable.fromIterable(list))
-                .filter(user -> user.getEmail().equals(email));*/
-
-      return mWeatherApi
-              .getWeather(lat,lon,mContext.getResources().getString(R.string.api_key_weather_forecast));
+    public Single<Weather> loadWeatherForecast5Days(double lat, double lon) {
+        return mWeatherApi
+                .getWeather(lat, lon, mContext.getResources().getString(R.string.api_key_weather_forecast))
+                .cache();
     }
+
+
+
+
 
 }

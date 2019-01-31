@@ -33,7 +33,6 @@ public class MapFragment extends BaseFragment implements MapScreenContract.ViewW
     Button mWeatherForecast;
 
     public static MapFragment MapFragment() {
-        // Required empty public constructor
         return new MapFragment();
     }
 
@@ -62,12 +61,6 @@ public class MapFragment extends BaseFragment implements MapScreenContract.ViewW
         Fragment fr = WeatherFragment.WeatherFragment(mLat,mLng);
         BaseFragment.FragmentChangeListener fc = (BaseFragment.FragmentChangeListener) getActivity();
         fc.replaceFragment(fr);
-    }
-
-    @Override
-    public void showError(String error) {
-
-
     }
 
     @Override

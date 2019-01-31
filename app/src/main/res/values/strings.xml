@@ -21,4 +21,7 @@
     <string name="permission_notice">This permission is important but you can as well set your location on Location page</string>
     <string name="go_to_location">Go to location setting</string>
 
+    <string name="common_error">Something happened</string>
+    <string name="weather_forecast">Weather forecast</string>
+
 </resources>

@@ -29,7 +29,7 @@ public class WeatherAPIModule {
                              RxJava2CallAdapterFactory rxJava2CallAdapterFactory) {
         return new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("api.openweathermap.org/data/2.5")
+                .baseUrl("http://api.openweathermap.org/data/2.5/")
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJava2CallAdapterFactory)
                 .build();

@@ -2,6 +2,7 @@ package com.romanenko.lew.progforcetask.base.di.modules;
 
 import android.content.Context;
 
+import com.romanenko.lew.progforcetask.model.IRepository;
 import com.romanenko.lew.progforcetask.model.Repository;
 import com.romanenko.lew.progforcetask.network.WeatherApi;
 import com.romanenko.lew.progforcetask.network.di.models.WeatherAPIModule;
@@ -15,7 +16,7 @@ public class RepositoryModule {
 
     @Provides
     @ApplicationScope
-    Repository provideRepo(Context context, WeatherApi weatherApi){
+    IRepository provideRepo(Context context, WeatherApi weatherApi){
         return new Repository(context,weatherApi);
     }
 }
