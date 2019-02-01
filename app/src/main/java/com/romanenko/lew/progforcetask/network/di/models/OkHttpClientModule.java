@@ -52,38 +52,32 @@ public class OkHttpClientModule {
     @Named("interceptor")
     @Provides
     public Interceptor Interceptor(Context context) {
-        return new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Response response = chain.proceed( chain.request() );
-                CacheControl cacheControl = new CacheControl.Builder()
-                        .maxAge( 1, TimeUnit.MINUTES )
-                        .build();
+        return chain -> {
+            Response response = chain.proceed( chain.request() );
+            CacheControl cacheControl = new CacheControl.Builder()
+                    .maxAge( 1, TimeUnit.MINUTES )
+                    .build();
 
-                return response.newBuilder()
-                        .header( CACHE_CONTROL, cacheControl.toString() )
-                        .build();
-            }
+            return response.newBuilder()
+                    .header( CACHE_CONTROL, cacheControl.toString() )
+                    .build();
         };
     }
     @Named("offlineInterceptor")
     @Provides
     public Interceptor offlineInterceptor(Context context) {
-        return new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                if(!NetworkState.isConnectedToNetwork(context)){
-                    CacheControl cacheControl = new CacheControl.Builder()
-                            .maxStale( 7, TimeUnit.DAYS )
-                            .build();
+        return chain -> {
+            Request request = chain.request();
+            if(!NetworkState.isConnectedToNetwork(context)){
+                CacheControl cacheControl = new CacheControl.Builder()
+                        .maxStale( 7, TimeUnit.DAYS )
+                        .build();
 
-                    request = request.newBuilder()
-                            .cacheControl( cacheControl )
-                            .build();
-                }
-                return chain.proceed(request);
+                request = request.newBuilder()
+                        .cacheControl( cacheControl )
+                        .build();
             }
+            return chain.proceed(request);
         };
     }
 }

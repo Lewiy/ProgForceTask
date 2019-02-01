@@ -23,11 +23,13 @@ import io.reactivex.schedulers.Schedulers;
 public class WeatherPresenter extends BasePresenter<WeatherScreenContract.ViewWeather> implements WeatherScreenContract.PresenterWeather {
 
 
-    private IRepository repository;
-    private Single<Weather> weatherSingle;
+    private IRepository mRepository;
+    private Single<Weather> mWeatherSingle;
+    private static final int RANGE_START = 1,RANGE_END= 40, FIRST_ELEMENT = 0,NEEDE_POSITION_ELEMENT = 8;
+    private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     WeatherPresenter(Context context) {
-        repository = App.get(context).getAppComponent().getUserRepository();
+        mRepository = App.get(context).getAppComponent().getUserRepository();
     }
 
     @Override
@@ -38,28 +40,28 @@ public class WeatherPresenter extends BasePresenter<WeatherScreenContract.ViewWe
     @Override
     public void loadWeatherForecast(double lat, double lng) {
 
-        Observable<Integer> values = Observable.range(1, 40);
-        weatherSingle = repository.loadWeatherForecast5Days(lat, lng);
+        Observable<Integer> values = Observable.range(RANGE_START, RANGE_END);
+        mWeatherSingle = mRepository.loadWeatherForecast5Days(lat, lng);
 
-        weatherSingle.subscribeOn(Schedulers.io())
+        mWeatherSingle.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(weather -> {
                             getView().setCity(weather.getCity().getName());
-                            getView().setClouds(weather.getList().get(0).getClouds().getAll());
-                            getView().setHumidityValue(weather.getList().get(0).getMain().getHumidity());
-                            getView().setWindValue(weather.getList().get(0).getWind().getSpeed());
-                            getView().setWeatherDescription(weather.getList().get(0).getWeather().get(0).getDescription());
+                            getView().setClouds(weather.getList().get(FIRST_ELEMENT).getClouds().getAll());
+                            getView().setHumidityValue(weather.getList().get(FIRST_ELEMENT).getMain().getHumidity());
+                            getView().setWindValue(weather.getList().get(FIRST_ELEMENT).getWind().getSpeed());
+                            getView().setWeatherDescription(weather.getList().get(FIRST_ELEMENT).getWeather().get(FIRST_ELEMENT).getDescription());
                         }
                         , error -> getView().showError(error.getMessage().toString()));
 
-        weatherSingle
+        mWeatherSingle
                 .flattenAsObservable(weather -> weather.getList())
                 .zipWith(values, (i, n) -> new Pair(n, i))
-                .filter(i -> i.getLeft() % 8 == 0)
+                .filter(i -> i.getLeft() % NEEDE_POSITION_ELEMENT == 0)
                 .map(weather ->
                         new WeatherObject(getDayOfWeek(weather.getRight().getDtTxt())
-                                , weather.getRight().getWeather().get(0).getIcon()
-                                , weather.getRight().getWeather().get(0).getDescription()
+                                , weather.getRight().getWeather().get(FIRST_ELEMENT).getIcon()
+                                , weather.getRight().getWeather().get(FIRST_ELEMENT).getDescription()
                                 , String.valueOf(weather.getRight().getMain().getTemp()))
                 )
                 .toList()
@@ -75,7 +77,7 @@ public class WeatherPresenter extends BasePresenter<WeatherScreenContract.ViewWe
 
     private String getDayOfWeek(String str) {
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH);
         try {
             cal.setTime(sdf.parse(str));
         } catch (ParseException e) {

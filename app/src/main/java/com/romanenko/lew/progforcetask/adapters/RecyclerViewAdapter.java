@@ -37,14 +37,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     public void onBindViewHolder(RecyclerViewHolders holder, int position) {
 
             holder.dayOfWeek.setText(dailyWeather.get(position).getDayOfWeek());
-            ///holder.weatherIcon.setImageResource(dailyWeather.get(position).getWeatherIcon());
             Picasso.get().load( "http://openweathermap.org/img/w/"
                     + dailyWeather.get(position).getWeatherIcon()+".png").into(holder.weatherIcon);
             double mTemp = Double.parseDouble(dailyWeather.get(position).getWeatherResultSmall());
             holder.weatherResult.setText(String.valueOf(Math.round(mTemp)) + "°");
 
             holder.weatherResultSmall.setText(dailyWeather.get(position).getWeatherResult());
-           // holder.weatherResultSmall.setVisibility(View.GONE);
     }
 
     @Override

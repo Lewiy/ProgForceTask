@@ -62,28 +62,6 @@ public class MapFragment extends BaseFragment implements MapScreenContract.ViewW
     private void init() {
         mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);
         mMapFragment.getMapAsync(this);
-
-
-      /*  AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-                getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-
-// Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
-
-// Set up a PlaceSelectionListener to handle the response.
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });*/
     }
 
     @OnClick(R.id.weather_forecast)
@@ -103,8 +81,6 @@ public class MapFragment extends BaseFragment implements MapScreenContract.ViewW
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        //  mMap.clear(); //clear old markers
-
         CameraPosition googlePlex = CameraPosition.builder()
                 .target(new LatLng(37.4219999, -122.0862462))
                 .zoom(10)
@@ -113,21 +89,17 @@ public class MapFragment extends BaseFragment implements MapScreenContract.ViewW
                 .build();
 
         mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null);
-
-        mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(37.4219999, -122.0862462))
-                .title("Spider Man"));
-        // .icon(bitmapDescriptorFromVector(getActivity(),R.drawable.spider)));
         mGoogleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                // Cleaning all the markers.
-
-              /*  mPosition = mGoogleMap.getCameraPosition().target;
-                mZoom = mGoogleMap.getCameraPosition().zoom;*/
                 mLat = mGoogleMap.getCameraPosition().target.latitude;
                 mLng = mGoogleMap.getCameraPosition().target.longitude;
             }
         });
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

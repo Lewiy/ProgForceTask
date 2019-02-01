@@ -168,4 +168,9 @@ public class WeatherFragment extends BaseFragment implements WeatherScreenContra
     }
 
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mPresenterWeather.detachView();
+    }
 }
