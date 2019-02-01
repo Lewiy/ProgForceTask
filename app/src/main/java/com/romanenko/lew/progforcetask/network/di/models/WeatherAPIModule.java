@@ -33,6 +33,7 @@ public class WeatherAPIModule {
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJava2CallAdapterFactory)
                 .build();
+
     }
 
     @Provides

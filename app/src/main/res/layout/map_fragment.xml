@@ -16,6 +16,7 @@
         android:text="@string/weather_forecast"
         android:background="@color/colorPrimary"/>
 
+
     <fragment
         android:id="@+id/frg"
         android:name="com.google.android.gms.maps.SupportMapFragment"

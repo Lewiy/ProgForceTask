@@ -80,6 +80,8 @@ public class WeatherFragment extends BaseFragment implements WeatherScreenContra
         mLat = position[0];
         mLng = position[1];
 
+
+
     }
 
     @Nullable
@@ -99,6 +101,10 @@ public class WeatherFragment extends BaseFragment implements WeatherScreenContra
                 .inject(this);
         mPresenterWeather.attachView(this);
         mPresenterWeather.viewIsReady();
+
+        if(!isConnectedToNetwork(getContext()))
+            showError(getResources().getString(R.string.no_internet_connection));
+
         mPresenterWeather.loadWeatherForecast(mLat, mLng);
 
         mWeatherList.setLayoutManager(mLayoutManager);

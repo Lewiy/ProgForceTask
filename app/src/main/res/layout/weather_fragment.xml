@@ -15,21 +15,21 @@
 
 
     <LinearLayout
+        android:id="@+id/weather_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:background="@color/colorBackground"
         android:orientation="vertical"
-        tools:context=".MainActivity"
-        android:layout_centerInParent="true">
-
+        android:visibility="gone"
+        tools:context=".MainActivity">
 
         <LinearLayout
-            android:id="@+id/weather_page"
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/city_country"

@@ -2,11 +2,13 @@ package com.romanenko.lew.progforcetask.mapScreen;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,9 +21,13 @@ import com.romanenko.lew.progforcetask.base.BaseFragment;
 import com.romanenko.lew.progforcetask.base.MapScreenContract;
 import com.romanenko.lew.progforcetask.weatherScreen.WeatherFragment;
 
+import java.util.Arrays;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class MapFragment extends BaseFragment implements MapScreenContract.ViewWeather, OnMapReadyCallback {
 
@@ -39,6 +45,8 @@ public class MapFragment extends BaseFragment implements MapScreenContract.ViewW
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(!isConnectedToNetwork(getContext()))
+            showError(getResources().getString(R.string.no_internet_connection));
 
     }
 
@@ -54,6 +62,28 @@ public class MapFragment extends BaseFragment implements MapScreenContract.ViewW
     private void init() {
         mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);
         mMapFragment.getMapAsync(this);
+
+
+      /*  AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+// Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+// Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });*/
     }
 
     @OnClick(R.id.weather_forecast)

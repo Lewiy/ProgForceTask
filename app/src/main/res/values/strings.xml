@@ -22,6 +22,7 @@
     <string name="go_to_location">Go to location setting</string>
 
     <string name="common_error">Something happened</string>
+    <string name="no_internet_connection">No internet connection</string>
     <string name="weather_forecast">Weather forecast</string>
 
 </resources>
